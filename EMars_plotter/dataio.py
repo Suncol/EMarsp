@@ -15,9 +15,12 @@ def get_file_list(dir,suffix):
     return d_list
 
 # read dataname in the filename
-def nc_reader(filepath, dataname):  
-    ds = nc.Dataset(filepath)
-    data = ds[dataname][:]
+def nc_reader(filepath, dataname):
+    try:  
+        ds = nc.Dataset(filepath)
+        data = ds[dataname][:]
+    except:
+        print("Error can not extract: "+dataname+" in file: "+filepath)
     return data
 
 # write file to mat

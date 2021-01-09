@@ -177,8 +177,9 @@ def mean_plotter_sm(filepath, dataname, vmin, vmax, cmap_use, level_num,log_cb=F
     
     try:
         data = dataio.nc_reader(filepath, dataname)
-    except:
-        print('Can not extract: ' + dataname + 'in the file: ' + filepath)
+    except Exception as Exc:
+        print("error from dataIO, check is that ok latter, we will go on now!")
+        return None
 
     # change it to zonal mean and time mean
     data_tm = np.nanmean(data, axis=0) # time mean
@@ -280,7 +281,6 @@ def mean_plotter_dust(filepath, dataname, vmin, vmax, cmap_use, level_num,log_cb
     plt.savefig(savepath,dpi=800)
     plt.close(fig)
     print('Ploted result of '+ filepath + ' for '+ dataname + '!')
-    
     
     
     
