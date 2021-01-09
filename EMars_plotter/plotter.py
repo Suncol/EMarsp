@@ -175,8 +175,11 @@ def mean_plotter_sm(filepath, dataname, vmin, vmax, cmap_use, level_num,log_cb=F
     lat = dataio.nc_reader(filepath, 'lat') 
     pfull = dataio.nc_reader(filepath, 'pfull')
     
-    data = dataio.nc_reader(filepath, dataname)
-    
+    try:
+        data = dataio.nc_reader(filepath, dataname)
+    except:
+        print('Can not extract: ' + dataname + 'in the file: ' + filepath)
+
     # change it to zonal mean and time mean
     data_tm = np.nanmean(data, axis=0) # time mean
     data_tlm = np.nanmean(data_tm, axis=2) # zonal mean
