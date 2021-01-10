@@ -282,6 +282,66 @@ def mean_plotter_dust(filepath, dataname, vmin, vmax, cmap_use, level_num,log_cb
     plt.close(fig)
     print('Ploted result of '+ filepath + ' for '+ dataname + '!')
     
+
+# plot simple 2D vars, usually some column dataset
+def mean_plotter_sm2d(filepath, dataname, vmin, vmax, cmap_use, level_num, log_cb=False): 
+    '''
+    input a filepath and plot the mean state result of some simple variables 
+    auto build the result file in the basename of the filepath
+    default using for the grid in non-anal dataset 
+    '''
+    data_path=os.path.dirname(filepath)
+    
+    # load data, note that i don't transpose the matrix here
+    # Ls = dataio.nc_reader(filepath, 'Ls')    
+    lon = dataio.nc_reader(filepath, 'lon')
+    lat = dataio.nc_reader(filepath, 'lat') 
+    #pfull = dataio.nc_reader(filepath, 'pfull')
+    
+    try:
+        data = dataio.nc_reader(filepath, dataname)
+    except Exception as Exc:
+        print("error from dataIO, check is that ok latter, we will go on now!")
+        return None
+
+    # change it to time mean
+    data_tm = np.nanmean(data, axis=0) # time mean
+    
+    # plot the time mean and zonal mean results
+    plt.switch_backend('agg')
+    fig, ax = plt.subplots(figsize=(8, 6))
+    #plt.yscale('log')
+    #plt.gca().invert_yaxis()
+    
+    # if we need to plot log colorbar, usually for water vapor, water ice
+    if log_cb:
+       levels = np.logspace(vmin,vmax, level_num,base=10) 
+       CS = ax.contourf(lon, lat, data_tm, levels=levels,cmap=cmap_use, vmin=levels[0], vmax=levels[-1], norm=LogNorm())
+    else:
+        levels = np.linspace(vmin, vmax, level_num)
+        CS = ax.contourf(lon, lat, data_tm, levels=levels,cmap=cmap_use, vmin=vmin, vmax=vmax)
+    
+    CB = plt.colorbar(CS, shrink=0.8, extend='both')
+    
+    ax.set_title('Mean of '+ dataname + " during " + \
+                 filepath.split('_')[5] \
+                 + ' ' +filepath.split('_')[-1][:-3])
+    
+    plt.xlabel('longitude')
+    plt.ylabel('latitude')
+    
+    # save the figure to png file
+    save_dir = os.path.join(data_path, dataname)
+    
+    if not os.path.exists(save_dir): # check and build the result dir
+        os.makedirs(save_dir)
+    
+    savepath = os.path.join(save_dir, dataname+'_Mean_'+ 
+                 filepath.split('_')[5] \
+                 + '_' +filepath.split('_')[-1][:-3]+'.png')
+    plt.savefig(savepath,dpi=800)
+    plt.close(fig)
+    print('Ploted result of '+ filepath + ' for '+ dataname + '!')
     
     
     
