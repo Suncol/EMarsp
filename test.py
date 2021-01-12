@@ -13,9 +13,9 @@ if __name__ == "__main__":
     file_list = dataio.get_file_list(data_path,'.nc')
     
     # using joblib for parallel plot 
-    #Parallel(n_jobs=5,verbose=100)(delayed(plotter.mean_plotter_rc)(filepath) for filepath in file_list)
+    Parallel(n_jobs=5,verbose=100)(delayed(plotter.mean_plotter_rc)(filepath) for filepath in file_list)
     
-    #Parallel(n_jobs=5,verbose=100)(delayed(plotter.mean_plotter_ep)(filepath) for filepath in file_list)
+    Parallel(n_jobs=5,verbose=100)(delayed(plotter.mean_plotter_ep)(filepath) for filepath in file_list)
     
     # unit test, maybe you can also use it 
     for filepath in file_list: # as i know, server take so long time to start the process in the joblib
@@ -29,7 +29,7 @@ if __name__ == "__main__":
         plotter.mean_plotter_sm(filepath, 't', vmin=0, vmax=250, ticks=[0,50,100,150,200,250],cmap_use=plt.cm.YlOrRd, level_num=30)
         
         # # try plot zonal wind
-        #plotter.mean_plotter_sm(filepath, 'u', vmin=-150, vmax=150, cmap_use=plt.cm.seismic,level_num=301)
+        plotter.mean_plotter_sm(filepath, 'u', vmin=-150, vmax=150, ticks=[-150,-100,-50,0,50,100,150],cmap_use=plt.cm.seismic,level_num=30)
         
         # # try plot water ice
         #plotter.mean_plotter_sm(filepath, 'cld', vmin=-11, vmax=-2, cmap_use=plt.cm.cool,level_num=10,log_cb=True)
@@ -48,7 +48,6 @@ if __name__ == "__main__":
         # try plot total visible opacity from aerosols
         #plotter.mean_plotter_sm2d(filepath,'vod', vmin=-3, vmax=2, cmap_use=plt.cm.cool, level_num=6, log_cb=True)
         
-    #plotter.image_sort(plot_path)
     
     # try to make movie in certain plot path
     #plotter.movie_maker(plot_path,fps=5)
