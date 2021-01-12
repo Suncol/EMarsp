@@ -347,7 +347,7 @@ def mean_plotter_sm2d(filepath, dataname, vmin, vmax, cmap_use, level_num, log_c
     print('Ploted result of '+ filepath + ' for '+ dataname + '!')
     
     
-# movie maker for png files
+# movie maker for plot files
 def movie_maker(plot_path, plot_type='.png',video_name='results.avi', fps=15): # default plot type is png 
     # get the image file lists
     # usually no need to sort the image list, it is ok for normal use    
