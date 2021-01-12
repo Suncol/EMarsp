@@ -164,7 +164,7 @@ def mean_plotter_ep(filepath):
     print('ploted '+ filepath + 'for ep flux!') 
     
 # plot simple zonal mean vars, like temp, zonal wind, dust etc.
-def mean_plotter_sm(filepath, dataname, vmin, vmax, cmap_use, level_num,log_cb=False):
+def mean_plotter_sm(filepath, dataname, vmin, vmax, ticks,cmap_use, level_num,log_cb=False):
     '''
     input a filepath and plot the mean state result of some simple variables 
     auto build the result file in the basename of the filepath
@@ -198,11 +198,11 @@ def mean_plotter_sm(filepath, dataname, vmin, vmax, cmap_use, level_num,log_cb=F
     if log_cb:
         levels = np.logspace(vmin,vmax, level_num,base=10) 
         CS = ax.contourf(lat, pfull, data_tlm, levels=levels,cmap=cmap_use, vmin=levels[0], vmax=levels[-1], norm=LogNorm())
+        CB = plt.colorbar(CS, shrink=0.8, extend='both')
     else:
         levels = np.linspace(vmin, vmax, level_num)
         CS = ax.contourf(lat, pfull, data_tlm, levels=levels,cmap=cmap_use, vmin=vmin, vmax=vmax)
-    
-    CB = plt.colorbar(CS, shrink=0.8, extend='both')
+        CB = plt.colorbar(CS, shrink=0.8, extend='both',ticks=ticks)
     
     ax.set_title('Mean of '+ dataname + " during " + \
                  filepath.split('_')[5] \
