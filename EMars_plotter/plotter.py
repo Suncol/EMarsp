@@ -345,15 +345,35 @@ def mean_plotter_sm2d(filepath, dataname, vmin, vmax, cmap_use, level_num, log_c
     plt.savefig(savepath,dpi=800)
     plt.close(fig)
     print('Ploted result of '+ filepath + ' for '+ dataname + '!')
+
+# sort the images
+def image_sort(image): # input a image name and sort the sequence for movie maker
+    '''
+    It's funny to know, this func maybe is no need to use in the windows
+    '''
+    # images = [img for img in os.listdir(plot_path) if img.endswith('.png')]
+    # for image in images:
+    #     mars_year = int(image.split('_')[2][2:])
+    #     begin_day = image.split('_')[-1][2:5] # end_day: image.split('_')[-1][6:9]
+    #     print(mars_year,begin_day,int(mars_year)*360+int(begin_day))
     
+    # return int(image.split('_')[2][2:])*360+int(image.split('_')[-1][2:5])
+    
+    mars_year = int(image.split('_')[2][2:])
+    begin_day = int(image.split('_')[-1][2:5])
+    
+    return mars_year*360+begin_day 
     
 # movie maker for plot files
 def movie_maker(plot_path, plot_type='.png',video_name='results.avi', fps=15): # default plot type is png 
     # get the image file lists
     # usually no need to sort the image list, it is ok for normal use    
     images = [img for img in os.listdir(plot_path) if img.endswith(plot_type)]
+    # sort the images list
+    images.sort(key=image_sort)
     print('ploting the images below, check the sequence if you wanna make sure')
     print(images)
+    image_sort(images[0])
     
     # get the images frame from the first image
     frame = cv2.imread(os.path.join(plot_path, images[0])) 

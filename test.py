@@ -46,5 +46,7 @@ if __name__ == "__main__":
         # try plot total visible opacity from aerosols
         #plotter.mean_plotter_sm2d(filepath,'vod', vmin=-3, vmax=2, cmap_use=plt.cm.cool, level_num=6, log_cb=True)
         
+    #plotter.image_sort(plot_path)
+    
     # try to make movie in certain plot path
     plotter.movie_maker(plot_path,fps=5)
