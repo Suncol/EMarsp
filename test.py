@@ -12,8 +12,6 @@ if __name__ == "__main__":
     plot_path = 'D:\\Program\\Mars\\Mars_data\EMARS\\anal_mean\\T'
     file_list = dataio.get_file_list(data_path,'.nc')
     
-    # try to make movie in certain plot path
-    plotter.movie_maker(plot_path,fps=5)
     # using joblib for parallel plot 
     #Parallel(n_jobs=5,verbose=100)(delayed(plotter.mean_plotter_rc)(filepath) for filepath in file_list)
     
@@ -48,4 +46,5 @@ if __name__ == "__main__":
         # try plot total visible opacity from aerosols
         #plotter.mean_plotter_sm2d(filepath,'vod', vmin=-3, vmax=2, cmap_use=plt.cm.cool, level_num=6, log_cb=True)
         
-
+    # try to make movie in certain plot path
+    plotter.movie_maker(plot_path,fps=5)
