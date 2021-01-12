@@ -9,6 +9,9 @@ import os
 import EMars_plotter.calculator as calculator
 import EMars_plotter.dataio as dataio
 
+# for movie maker
+import cv2 # conda install -c conda-forge opencv or pip3 things
+
 # residual circulation plotter
 def mean_plotter_rc(filepath):
     '''
@@ -344,10 +347,31 @@ def mean_plotter_sm2d(filepath, dataname, vmin, vmax, cmap_use, level_num, log_c
     print('Ploted result of '+ filepath + ' for '+ dataname + '!')
     
     
+# movie maker for png files
+def movie_maker(plot_path, plot_type='.png',video_name='results.avi', fps=15): # default plot type is png 
+    # get the image file lists
+    # usually no need to sort the image list, it is ok for normal use    
+    images = [img for img in os.listdir(plot_path) if img.endswith(plot_type)]
+    print('ploting the images below, check the sequence if you wanna make sure')
+    print(images)
     
+    # get the images frame from the first image
+    frame = cv2.imread(os.path.join(plot_path, images[0])) 
+    height, width, layers = frame.shape
     
+    # use the video writer from the cv2 python lib
+    print('Begin to make video, video name: ' + video_name)
+    video = cv2.VideoWriter(os.path.join(plot_path,video_name), \
+                            cv2.VideoWriter_fourcc(*'DIVX'),\
+                            fps, (width,height))
     
-    
+    for image in images:
+        print('Processing %.2f' %((images.index(image)+1) / len(images) * 100) + '% of images')
+        video.write(cv2.imread(os.path.join(plot_path, image)))
+        
+    cv2.destroyAllWindows()
+    video.release()
+    print('video done, please check the dir: ', os.path.join(plot_path))
     
     
     
