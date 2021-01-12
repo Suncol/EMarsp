@@ -164,7 +164,7 @@ def mean_plotter_ep(filepath):
     print('ploted '+ filepath + 'for ep flux!') 
     
 # plot simple zonal mean vars, like temp, zonal wind, dust etc.
-def mean_plotter_sm(filepath, dataname, vmin, vmax, ticks,cmap_use, level_num,log_cb=False):
+def mean_plotter_sm(filepath, dataname, vmin, vmax, ticks=[],cmap_use, level_num,log_cb=False):
     '''
     input a filepath and plot the mean state result of some simple variables 
     auto build the result file in the basename of the filepath
