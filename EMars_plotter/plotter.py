@@ -164,7 +164,8 @@ def mean_plotter_ep(filepath):
     print('ploted '+ filepath + 'for ep flux!') 
     
 # plot simple zonal mean vars, like temp, zonal wind, dust etc.
-def mean_plotter_sm(filepath, dataname, vmin, vmax,cmap_use, level_num, ticks=[],log_cb=False):
+# usually, we use the default option in the func defination
+def mean_plotter_sm(filepath, dataname, vmin, vmax,cmap_use, level_num, ticks=[],log_cb=False,isDgrid=False):
     '''
     input a filepath and plot the mean state result of some simple variables 
     auto build the result file in the basename of the filepath
@@ -175,7 +176,15 @@ def mean_plotter_sm(filepath, dataname, vmin, vmax,cmap_use, level_num, ticks=[]
     # load data, note that i don't transpose the matrix here
     # Ls = dataio.nc_reader(filepath, 'Ls')
     # lon = dataio.nc_reader(filepath, 'lon')
-    lat = dataio.nc_reader(filepath, 'lat') 
+
+    # check if use the Dgrid
+    if isDgrid:
+        if dataname == 'U': # if plot the reanalysis dataset U in Dgrid,latu is used
+            lat = dataio.nc_reader(filepath,'latu')
+            print('Using Dgrid: latu instead of lat!!!')
+    else:        
+        lat = dataio.nc_reader(filepath, 'lat') 
+
     pfull = dataio.nc_reader(filepath, 'pfull')
     
     try:
