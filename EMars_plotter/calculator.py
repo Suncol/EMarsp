@@ -217,6 +217,10 @@ def cal_ep(lon,lat,pres,alt,Ls,ps,u,v,w,t,radius,omega,pref=600.0):
     for ipres in range(npres):
         F1[:,ipres,:] = F1[:,ipres,:] * rhofac[ipres]
         F2[:,ipres,:] = F2[:,ipres,:] * rhofac[ipres]
-    
-    
+
+        # add weight in different height
+        F1[:,ipres,:] = F1[:,ipres,:] / np.sqrt(density[ipres])
+        F2[:,ipres,:] = F2[:,ipres,:] / np.sqrt(density[ipres])
+
+
     return F1, F2, div # ep flux phi, ep flux z, ep flux div

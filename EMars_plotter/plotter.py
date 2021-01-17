@@ -5,12 +5,18 @@ import matplotlib.pyplot as plt
 from matplotlib.colors import LogNorm
 import numpy as np
 from scipy import interpolate
+from scipy.ndimage import gaussian_filter
 import os
 import EMars_plotter.calculator as calculator
 import EMars_plotter.dataio as dataio
 
 # for movie maker
 import cv2 # conda install -c conda-forge opencv or pip3 things
+
+# a 2D smoother
+def smoother(datain, sigma=1):
+    return gaussian_filter(datain,sigma)
+
 
 # residual circulation plotter
 def mean_plotter_rc(filepath):
@@ -65,7 +71,9 @@ def mean_plotter_rc(filepath):
     vrestm = np.nanmean(vres,axis=2)
     wrestm = np.nanmean(wres,axis=2)
     #vrestm[vrestm>200] = np.nan
-    ax.quiver(lat[2:-1], pfull, vrestm[2:-1,:].T, wrestm[2:-1,:].T * 100  )#,scale=1,scale_units='xy')
+    # set to the x scale, which is the main component in residual circulation
+    q = ax.quiver(lat[2:-1], pfull, vrestm[2:-1,:].T, wrestm[2:-1,:].T * 100  ,scale=1,scale_units='x')
+    ax.quiverkey(q, 0.9, 0.9, 1, r'$1 \frac{m}{s}$', labelpos='E', coordinates='figure')
     # vzm = np.nanmean(v,axis=0)
     # wzm = np.nanmean(w,axis=0)
     # ax.quiver(lat[2:-1], pfull, vzm[2:-1,:,100].T, wzm[2:-1,:,100].T*200,scale=1,scale_units='xy')
@@ -140,9 +148,15 @@ def mean_plotter_ep(filepath):
     plt.gca().invert_yaxis()
     
     EPphitm = np.nanmean(EPphi,axis=2)
-    EPztm = np.nanmean(EPz,axis=2)    
-    
-    ax.quiver(lat[2:-1], pfull, EPphitm[2:-1,:].T, EPztm[2:-1,:].T  )
+    EPztm = np.nanmean(EPz,axis=2)
+
+    # 2d smooth, method : gaussian
+    EPphitm = smoother(EPphitm,4)
+    EPztm = smoother(EPztm,4)
+
+    q = ax.quiver(lat[2:-1], pfull, EPphitm[2:-1,:].T, EPztm[2:-1,:].T, scale=1,scale_units='x')
+    ax.quiverkey(q, 0.9, 0.9, 1, r'$1 \frac{m^2}{s}$', labelpos='E', coordinates='figure')
+    # ax.quiver(lat[2:-1], pfull[:5], EPphitm[2:-1,:5].T, EPztm[2:-1,:5].T, scale=0.01,scale_units='x')
     ax.set_title("ep flux during "+ filepath.split('_')[5] \
                 + ' ' +filepath.split('_')[-1][:-3])
         
