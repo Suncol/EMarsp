@@ -8,12 +8,12 @@ from joblib import Parallel, delayed
 
 if __name__ == "__main__":
 
-    data_path = '/home/data/Mars/EMARS/back_memb/'
-    plot_path = '/home/data/Mars/EMARS/back_mean/cld'
+    data_path = '/home/data/Mars/EMARS/back_mean/'
+    plot_path = '/home/data/Mars/EMARS/back_mean/ep_flux'
     file_list = dataio.get_file_list(data_path,'.nc')
-    do_loop = False # do loop is false, not to do the loop
+    do_loop = True # do loop is false, not to do the loop
     do_plot = False
-    do_joblib = True
+    do_joblib = False
 
     # using joblib for parallel plot
     if do_joblib:
@@ -34,11 +34,11 @@ if __name__ == "__main__":
 
             print('Processing %.2f' %((file_index+1) / total_filenum * 100) + '% of nc files')
             file_index += 1
-            ## try plot residual circulation
-            # plotter.mean_plotter_rc(filepath)
+            # try plot residual circulation
+            plotter.mean_plotter_rc(filepath)
 
-            ## try plot ep flux
-            # plotter.mean_plotter_ep(filepath)
+            # try plot ep flux
+            plotter.mean_plotter_ep(filepath)
 
             # # try plot temperature
             plotter.mean_plotter_sm(filepath, 't', vmin=0, vmax=250, ticks=[0,50,100,150,200,250],cmap_use=plt.cm.jet, level_num=50)
@@ -53,7 +53,7 @@ if __name__ == "__main__":
             plotter.mean_plotter_sm(filepath, 'vap', vmin=-11, vmax=-2, cmap_use=plt.cm.gist_ncar,level_num=10,log_cb=True)
 
             # # try plot dust o1
-            #plotter.mean_plotter_dust(filepath, 'dust',vmin=-23, vmax=-4, cmap_use=plt.cm.YlOrBr,level_num=20,log_cb=True)
+            plotter.mean_plotter_dust(filepath, 'dust',vmin=-23, vmax=-4, cmap_use=plt.cm.YlOrBr,level_num=20,log_cb=True)
 
             ## some 2d variables
 

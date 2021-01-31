@@ -35,7 +35,12 @@ def mean_plotter_rc(filepath):
     # load data 
     Ls = dataio.nc_reader(filepath,'Ls')
     lon = dataio.nc_reader(filepath, 'lon')
-    lat = dataio.nc_reader(filepath, 'lat') 
+    lat = dataio.nc_reader(filepath, 'lat')
+    # vertical coordinate
+    h = dataio.nc_reader(filepath, 'h') # shape is ntime x nlevel x nlat x nlon
+    htm = np.nanmean(h, axis=0) # time mean
+    htlm = np.nanmean(htm, axis=2) # zonal mean
+    alt = np.nanmean(htlm, axis=1) #  
     pfull = dataio.nc_reader(filepath, 'pfull')
     phalf = dataio.nc_reader(filepath, 'phalf')
     
@@ -79,8 +84,14 @@ def mean_plotter_rc(filepath):
     # ax.quiver(lat[2:-1], pfull, vzm[2:-1,:,100].T, wzm[2:-1,:,100].T*200,scale=1,scale_units='xy')
     ax.set_title("res cir during "+ filepath.split('_')[5] \
                 + ' ' +filepath.split('_')[-1][:-3])
+    plt.xlim((-90,90))
     plt.xlabel('latitude')
-    plt.ylabel('lev')
+    ax.set_ylabel('pressure level / Pa')
+    ax2 = ax.twinx()
+    alt = alt / 1000.0
+    ax2.set_yticks(np.arange(0,np.around(np.max(alt),decimals=-1)+np.max(alt)//10,np.max(alt)//10))
+    ax2.set_ylabel('altitude / km')
+    # plt.ylabel('lev')
 
     # save figure to png file with 800 dpi
     save_dir = os.path.join(data_path,dataname)
@@ -116,6 +127,11 @@ def mean_plotter_ep(filepath):
     Ls = dataio.nc_reader(filepath,'Ls')
     lon = dataio.nc_reader(filepath,'lon')
     lat = dataio.nc_reader(filepath,'lat')
+    ## vertical coordinate
+    h = dataio.nc_reader(filepath, 'h') # shape is ntime x nlevel x nlat x nlon
+    htm = np.nanmean(h, axis=0) # time mean
+    htlm = np.nanmean(htm, axis=2) # zonal mean
+    alt = np.nanmean(htlm, axis=1) # 
     pfull = dataio.nc_reader(filepath,'pfull')
     phalf = dataio.nc_reader(filepath,'phalf')
 
@@ -159,9 +175,15 @@ def mean_plotter_ep(filepath):
     # ax.quiver(lat[2:-1], pfull[:5], EPphitm[2:-1,:5].T, EPztm[2:-1,:5].T, scale=0.01,scale_units='x')
     ax.set_title("ep flux during "+ filepath.split('_')[5] \
                 + ' ' +filepath.split('_')[-1][:-3])
-        
+
+    plt.xlim((-90,90))
     plt.xlabel('latitude')
-    plt.ylabel('lev')
+    ax.set_ylabel('pressure level / Pa')
+    ax2 = ax.twinx()
+    alt = alt / 1000.0
+    ax2.set_yticks(np.arange(0,np.around(np.max(alt),decimals=-1)+np.max(alt)//10,np.max(alt)//10))
+    ax2.set_ylabel('altitude / km')
+    # plt.ylabel('lev')
     
     save_dir = os.path.join(data_path,dataname)
     
@@ -199,6 +221,11 @@ def mean_plotter_sm(filepath, dataname, vmin, vmax,cmap_use, level_num, ticks=[]
     else:        
         lat = dataio.nc_reader(filepath, 'lat') 
 
+    # vertical coordinate
+    h = dataio.nc_reader(filepath, 'h') # shape is ntime x nlevel x nlat x nlon
+    htm = np.nanmean(h, axis=0) # time mean
+    htlm = np.nanmean(htm, axis=2) # zonal mean
+    alt = np.nanmean(htlm, axis=1) # 
     pfull = dataio.nc_reader(filepath, 'pfull')
     
     try:
@@ -221,20 +248,25 @@ def mean_plotter_sm(filepath, dataname, vmin, vmax,cmap_use, level_num, ticks=[]
     if log_cb:
         levels = np.logspace(vmin,vmax, level_num,base=10) 
         CS = ax.contourf(lat, pfull, data_tlm, levels=levels,cmap=cmap_use, vmin=levels[0], vmax=levels[-1], norm=LogNorm())
-        CB = plt.colorbar(CS, shrink=0.8, extend='both')
+        CB = plt.colorbar(CS, shrink=0.8, extend='both',pad=0.15)
         CB.ax.set_ylabel(dataname, rotation=0)
     else:
         levels = np.linspace(vmin, vmax, level_num)
         CS = ax.contourf(lat, pfull, data_tlm, levels=levels,cmap=cmap_use, vmin=vmin, vmax=vmax)       
-        CB = plt.colorbar(CS, shrink=0.8, extend='both',ticks=ticks)
+        CB = plt.colorbar(CS, shrink=0.8, extend='both',ticks=ticks,pad=0.15)
         CB.ax.set_ylabel(dataname, rotation=0)
     
     ax.set_title('Mean of '+ dataname + " during " + \
                  filepath.split('_')[5] \
                  + ' ' +filepath.split('_')[-1][:-3])
-    
+    plt.xlim((-90,90))
     plt.xlabel('latitude')
-    plt.ylabel('lev')
+    ax.set_ylabel('pressure level / Pa')
+    ax2 = ax.twinx()
+    alt = alt / 1000.0
+    ax2.set_yticks(np.arange(0,np.around(np.max(alt),decimals=-1)+np.max(alt)//10,np.max(alt)//10))
+    ax2.set_ylabel('altitude / km')
+    # plt.ylabel('lev')
     
     # save the figure to png file
     save_dir = os.path.join(data_path, dataname)
@@ -262,6 +294,11 @@ def mean_plotter_dust(filepath, dataname, vmin, vmax, cmap_use, level_num,log_cb
     # Ls = dataio.nc_reader(filepath, 'Ls')
     # lon = dataio.nc_reader(filepath, 'lon')
     lat = dataio.nc_reader(filepath, 'lat') 
+    # vertical coordinate
+    h = dataio.nc_reader(filepath, 'h') # shape is ntime x nlevel x nlat x nlon
+    htm = np.nanmean(h, axis=0) # time mean
+    htlm = np.nanmean(htm, axis=2) # zonal mean
+    alt = np.nanmean(htlm, axis=1) # 
     pfull = dataio.nc_reader(filepath, 'pfull')
     
     o1 = dataio.nc_reader(filepath, 'o1')
@@ -288,14 +325,20 @@ def mean_plotter_dust(filepath, dataname, vmin, vmax, cmap_use, level_num,log_cb
         levels = np.linspace(vmin, vmax, level_num)
         CS = ax.contourf(lat, pfull, data_tlm, levels=levels,cmap=cmap_use, vmin=vmin, vmax=vmax)
     
-    CB = plt.colorbar(CS, shrink=0.8, extend='both')
+    CB = plt.colorbar(CS, shrink=0.8, extend='both',pad=0.15)
+    CB.ax.set_ylabel(dataname, rotation=0)
     
     ax.set_title('Mean of '+ dataname + " during " + \
                  filepath.split('_')[5] \
                  + ' ' +filepath.split('_')[-1][:-3])
-    
+    plt.xlim((-90,90))
     plt.xlabel('latitude')
-    plt.ylabel('lev')
+    ax.set_ylabel('pressure level / Pa')
+    ax2 = ax.twinx()
+    alt = alt / 1000.0
+    ax2.set_yticks(np.arange(0,np.around(np.max(alt),decimals=-1)+np.max(alt)//10,np.max(alt)//10))
+    ax2.set_ylabel('altitude / km')
+    # plt.ylabel('lev')
     
     # save the figure to png file
     save_dir = os.path.join(data_path, dataname)
