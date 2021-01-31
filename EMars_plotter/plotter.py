@@ -248,7 +248,7 @@ def mean_plotter_sm(filepath, dataname, vmin, vmax,cmap_use, level_num, ticks=[]
     if log_cb:
         levels = np.logspace(vmin,vmax, level_num,base=10) 
         CS = ax.contourf(lat, pfull, data_tlm, levels=levels,cmap=cmap_use, vmin=levels[0], vmax=levels[-1], norm=LogNorm())
-        CB = plt.colorbar(CS, shrink=0.8, extend='both',pad=0.15)
+        CB = plt.colorbar(CS, shrink=0.8, extend='both',ticks=ticks,pad=0.15)
         CB.ax.set_ylabel(dataname, rotation=0)
     else:
         levels = np.linspace(vmin, vmax, level_num)
@@ -282,7 +282,7 @@ def mean_plotter_sm(filepath, dataname, vmin, vmax,cmap_use, level_num, ticks=[]
     print('Ploted result of '+ filepath + ' for '+ dataname + '!')
     
 # plot simple zonal mean dust, the sum of o1, o2 and o3
-def mean_plotter_dust(filepath, dataname, vmin, vmax, cmap_use, level_num,log_cb=True):
+def mean_plotter_dust(filepath, dataname, vmin, vmax,level_num,cmap_use, ticks=[], log_cb=True):
     '''
     input a filepath and plot the mean state result of some simple variables 
     auto build the result file in the basename of the filepath
@@ -325,7 +325,7 @@ def mean_plotter_dust(filepath, dataname, vmin, vmax, cmap_use, level_num,log_cb
         levels = np.linspace(vmin, vmax, level_num)
         CS = ax.contourf(lat, pfull, data_tlm, levels=levels,cmap=cmap_use, vmin=vmin, vmax=vmax)
     
-    CB = plt.colorbar(CS, shrink=0.8, extend='both',pad=0.15)
+    CB = plt.colorbar(CS, shrink=0.8, extend='both',ticks=ticks,pad=0.15)
     CB.ax.set_ylabel(dataname, rotation=0)
     
     ax.set_title('Mean of '+ dataname + " during " + \

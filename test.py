@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 # by sun 2021
 
+import numpy as  np
 import matplotlib.pyplot as plt
 import EMars_plotter.plotter as plotter
 import EMars_plotter.dataio as dataio
@@ -47,13 +48,13 @@ if __name__ == "__main__":
             #plotter.mean_plotter_sm(filepath, 'u', vmin=-150, vmax=150, ticks=[-150,-100,-50,0,50,100,150],cmap_use=plt.cm.seismic,level_num=50,isDgrid=False)
 
             # # try plot water ice
-            plotter.mean_plotter_sm(filepath, 'cld', vmin=-11, vmax=-2, cmap_use=plt.cm.gist_ncar,level_num=10,log_cb=True)
+            plotter.mean_plotter_sm(filepath, 'cld', vmin=-16, vmax=-2, ticks=np.logspace(-16,-2,15,base=10),cmap_use=plt.cm.gist_ncar,level_num=50,log_cb=True)
 
             # # try plot water vapor
-            plotter.mean_plotter_sm(filepath, 'vap', vmin=-11, vmax=-2, cmap_use=plt.cm.gist_ncar,level_num=10,log_cb=True)
+            plotter.mean_plotter_sm(filepath, 'vap', vmin=-16, vmax=-2, ticks=np.logspace(-16,-2,15,base=10),cmap_use=plt.cm.gist_ncar,level_num=50,log_cb=True)
 
             # # try plot dust o1
-            plotter.mean_plotter_dust(filepath, 'dust',vmin=-23, vmax=-4, cmap_use=plt.cm.YlOrBr,level_num=20,log_cb=True)
+            plotter.mean_plotter_dust(filepath, 'dust',vmin=-23, vmax=-4,ticks=np.logspace(-23,-4,20,base=10), cmap_use=plt.cm.YlOrBr,level_num=60,log_cb=True)
 
             ## some 2d variables
 
