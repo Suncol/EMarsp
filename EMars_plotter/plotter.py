@@ -86,7 +86,7 @@ def mean_plotter_rc(filepath):
                 + ' ' +filepath.split('_')[-1][:-3])
     plt.xlim((-90,90))
     plt.xlabel('latitude')
-    ax.set_ylabel('pressure level / Pa')
+    ax.set_ylabel('pressure level / hPa')
     ax2 = ax.twinx()
     alt = alt / 1000.0
     ax2.set_yticks(np.arange(0,np.around(np.max(alt),decimals=-1)+np.max(alt)//10,np.max(alt)//10))
@@ -178,7 +178,7 @@ def mean_plotter_ep(filepath):
 
     plt.xlim((-90,90))
     plt.xlabel('latitude')
-    ax.set_ylabel('pressure level / Pa')
+    ax.set_ylabel('pressure level / hPa')
     ax2 = ax.twinx()
     alt = alt / 1000.0
     ax2.set_yticks(np.arange(0,np.around(np.max(alt),decimals=-1)+np.max(alt)//10,np.max(alt)//10))
@@ -261,7 +261,7 @@ def mean_plotter_sm(filepath, dataname, vmin, vmax,cmap_use, level_num, ticks=[]
                  + ' ' +filepath.split('_')[-1][:-3])
     plt.xlim((-90,90))
     plt.xlabel('latitude')
-    ax.set_ylabel('pressure level / Pa')
+    ax.set_ylabel('pressure level / hPa')
     ax2 = ax.twinx()
     alt = alt / 1000.0
     ax2.set_yticks(np.arange(0,np.around(np.max(alt),decimals=-1)+np.max(alt)//10,np.max(alt)//10))
@@ -333,7 +333,7 @@ def mean_plotter_dust(filepath, dataname, vmin, vmax,level_num,cmap_use, ticks=[
                  + ' ' +filepath.split('_')[-1][:-3])
     plt.xlim((-90,90))
     plt.xlabel('latitude')
-    ax.set_ylabel('pressure level / Pa')
+    ax.set_ylabel('pressure level / hPa')
     ax2 = ax.twinx()
     alt = alt / 1000.0
     ax2.set_yticks(np.arange(0,np.around(np.max(alt),decimals=-1)+np.max(alt)//10,np.max(alt)//10))

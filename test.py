@@ -9,7 +9,7 @@ from joblib import Parallel, delayed
 
 if __name__ == "__main__":
 
-    data_path = '/home/data/Mars/EMARS/back_mean/'
+    data_path = '/home/data/Mars/EMARS/back_memb/'
     plot_path = '/home/data/Mars/EMARS/back_mean/ep_flux'
     file_list = dataio.get_file_list(data_path,'.nc')
     do_loop = True # do loop is false, not to do the loop
