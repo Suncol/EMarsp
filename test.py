@@ -9,12 +9,13 @@ from joblib import Parallel, delayed
 
 if __name__ == "__main__":
 
-    data_path = '/home/data/Mars/EMARS/back_memb/'
-    plot_path = '/home/data/Mars/EMARS/back_mean/ep_flux'
+    data_path = '/home/data/Mars/EMARS/back_mean/'
+    plot_path = '/home/data/Mars/EMARS/back_mean/u'
     file_list = dataio.get_file_list(data_path,'.nc')
-    do_loop = True # do loop is false, not to do the loop
+    do_loop = False # do loop is false, not to do the loop
     do_plot = False
     do_joblib = False
+    do_test = True
 
     # using joblib for parallel plot
     if do_joblib:
@@ -35,26 +36,26 @@ if __name__ == "__main__":
 
             print('Processing %.2f' %((file_index+1) / total_filenum * 100) + '% of nc files')
             file_index += 1
-            # try plot residual circulation
-            plotter.mean_plotter_rc(filepath)
+            # # try plot residual circulation
+            # plotter.mean_plotter_rc(filepath)
 
-            # try plot ep flux
-            plotter.mean_plotter_ep(filepath)
+            # # try plot ep flux
+            # plotter.mean_plotter_ep(filepath)
 
             # # try plot temperature
             plotter.mean_plotter_sm(filepath, 't', vmin=0, vmax=250, ticks=[0,50,100,150,200,250],cmap_use=plt.cm.jet, level_num=50)
 
-            # #try plot zonal wind
-            #plotter.mean_plotter_sm(filepath, 'u', vmin=-150, vmax=150, ticks=[-150,-100,-50,0,50,100,150],cmap_use=plt.cm.seismic,level_num=50,isDgrid=False)
+            # # #try plot zonal wind
+            plotter.mean_plotter_sm(filepath, 'u', vmin=-150, vmax=150, ticks=[-150,-100,-50,0,50,100,150],cmap_use=plt.cm.seismic,level_num=50,isDgrid=false)
 
-            # # try plot water ice
-            plotter.mean_plotter_sm(filepath, 'cld', vmin=-16, vmax=-2, ticks=np.logspace(-16,-2,15,base=10),cmap_use=plt.cm.gist_ncar,level_num=50,log_cb=True)
+            # # # try plot water ice
+            # plotter.mean_plotter_sm(filepath, 'cld', vmin=-16, vmax=-2, ticks=np.logspace(-16,-2,15,base=10),cmap_use=plt.cm.gist_ncar,level_num=50,log_cb=True)
 
-            # # try plot water vapor
-            plotter.mean_plotter_sm(filepath, 'vap', vmin=-16, vmax=-2, ticks=np.logspace(-16,-2,15,base=10),cmap_use=plt.cm.gist_ncar,level_num=50,log_cb=True)
+            # # # try plot water vapor
+            # plotter.mean_plotter_sm(filepath, 'vap', vmin=-16, vmax=-2, ticks=np.logspace(-16,-2,15,base=10),cmap_use=plt.cm.gist_ncar,level_num=50,log_cb=True)
 
-            # # try plot dust o1
-            plotter.mean_plotter_dust(filepath, 'dust',vmin=-23, vmax=-4,ticks=np.logspace(-23,-4,20,base=10), cmap_use=plt.cm.YlOrBr,level_num=60,log_cb=True)
+            # # # try plot dust o1
+            # plotter.mean_plotter_dust(filepath, 'dust',vmin=-23, vmax=-4,ticks=np.logspace(-23,-4,20,base=10), cmap_use=plt.cm.YlOrBr,level_num=60,log_cb=True)
 
             ## some 2d variables
 
@@ -68,3 +69,6 @@ if __name__ == "__main__":
     if do_plot:
         # try to make movie in certain plot path
         plotter.movie_maker(plot_path,fps=5)
+
+    if do_test:
+        plotter.plotter_sm(data_path, 't', 25, (20,110),vmin=0, vmax=250,ticks=[0,50,100,150,200,250],cmap_use=plt.cm.jet, level_num=50)
