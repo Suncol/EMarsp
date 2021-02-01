@@ -54,7 +54,7 @@ if __name__ == "__main__":
             # # # try plot water vapor
             # plotter.mean_plotter_sm(filepath, 'vap', vmin=-16, vmax=-2, ticks=np.logspace(-16,-2,15,base=10),cmap_use=plt.cm.gist_ncar,level_num=50,log_cb=True)
 
-            # # # try plot dust o1
+            # # # try plot dust o1+o2+o3
             # plotter.mean_plotter_dust(filepath, 'dust',vmin=-23, vmax=-4,ticks=np.logspace(-23,-4,20,base=10), cmap_use=plt.cm.YlOrBr,level_num=60,log_cb=True)
 
             ## some 2d variables
@@ -71,4 +71,6 @@ if __name__ == "__main__":
         plotter.movie_maker(plot_path,fps=5)
 
     if do_test:
-        plotter.plotter_sm(data_path, 't', 25, (20,110),vmin=0, vmax=250,ticks=[0,50,100,150,200,250],cmap_use=plt.cm.jet, level_num=50)
+        # plot the simple vars, take temperature from MY Ls20 to Ls110 as an example
+        # plotter.plotter_sm(data_path, 't', 25, (20,110),vmin=0, vmax=250,ticks=[0,50,100,150,200,250],cmap_use=plt.cm.jet, level_num=50)
+        plotter.plotter_dust(data_path,'dust',25,(20,110), vmin=-23, vmax=-4,ticks=np.logspace(-23,-4,20,base=10), cmap_use=plt.cm.YlOrBr,level_num=60,log_cb=True)
