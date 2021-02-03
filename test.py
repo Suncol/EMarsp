@@ -46,7 +46,7 @@ if __name__ == "__main__":
             plotter.mean_plotter_sm(filepath, 't', vmin=0, vmax=250, ticks=[0,50,100,150,200,250],cmap_use=plt.cm.jet, level_num=50)
 
             # # #try plot zonal wind
-            plotter.mean_plotter_sm(filepath, 'u', vmin=-150, vmax=150, ticks=[-150,-100,-50,0,50,100,150],cmap_use=plt.cm.seismic,level_num=50,isDgrid=false)
+            plotter.mean_plotter_sm(filepath, 'u', vmin=-150, vmax=150, ticks=[-150,-100,-50,0,50,100,150],cmap_use=plt.cm.seismic,level_num=50,isDgrid=False)
 
             # # # try plot water ice
             # plotter.mean_plotter_sm(filepath, 'cld', vmin=-16, vmax=-2, ticks=np.logspace(-16,-2,15,base=10),cmap_use=plt.cm.gist_ncar,level_num=50,log_cb=True)
@@ -72,5 +72,10 @@ if __name__ == "__main__":
 
     if do_test:
         # plot the simple vars, take temperature from MY Ls20 to Ls110 as an example
-        # plotter.plotter_sm(data_path, 't', 25, (20,110),vmin=0, vmax=250,ticks=[0,50,100,150,200,250],cmap_use=plt.cm.jet, level_num=50)
-        plotter.plotter_dust(data_path,'dust',25,(20,110), vmin=-23, vmax=-4,ticks=np.logspace(-23,-4,20,base=10), cmap_use=plt.cm.YlOrBr,level_num=60,log_cb=True)
+        #plotter.plotter_sm(data_path, 't', 26, (0,30),vmin=0, vmax=250,ticks=[0,50,100,150,200,250],cmap_use=plt.cm.jet, level_num=50)
+        #plotter.plotter_dust(data_path,'dust',25,(20,110), vmin=-23, vmax=-4,ticks=np.logspace(-23,-4,20,base=10), cmap_use=plt.cm.YlOrBr,level_num=60,log_cb=True)
+        for i in range(360*4):
+            plotter.plotter_sm(data_path, 't', 26, (i/4,(i+1)/4),vmin=0, vmax=250,ticks=[0,50,100,150,200,250],cmap_use=plt.cm.jet, level_num=50)
+            plotter.plotter_sm(data_path, 'u', 26, (i/4,(i+1)/4) , vmin=-150, vmax=150, ticks=[-150,-100,-50,0,50,100,150],cmap_use=plt.cm.seismic,level_num=50,isDgrid=False)
+            plotter.plotter_sm(data_path, 'cld', 26, (i/4,(i+1)/4), vmin=-16, vmax=-2, ticks=np.logspace(-16,-2,15,base=10),cmap_use=plt.cm.gist_ncar,level_num=50,log_cb=True)
+            plotter.plotter_sm(data_path, 'vap', 26, (i/4,(i+1)/4),vmin=-16, vmax=-2, ticks=np.logspace(-16,-2,15,base=10),cmap_use=plt.cm.gist_ncar,level_num=50,log_cb=True)

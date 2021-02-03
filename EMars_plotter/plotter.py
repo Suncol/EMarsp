@@ -505,7 +505,7 @@ def plotter_sm(data_path, dataname, Mars_year, Ls_range,vmin, vmax,cmap_use, lev
         CB.ax.set_ylabel(dataname, rotation=0)
 
     ax.set_title('Mean of '+ dataname + " during " + "MY" + str(Mars_year)+ \
-        " "+ str(Ls_range[0]) + "-" + str(Ls_range[1]))
+        " Ls"+ str(Ls_range[0]) + "-Ls" + str(Ls_range[1]))
 
     plt.xlim((-90,90))
     plt.xlabel('latitude')
@@ -523,7 +523,7 @@ def plotter_sm(data_path, dataname, Mars_year, Ls_range,vmin, vmax,cmap_use, lev
         os.makedirs(save_dir)
     
     savepath = os.path.join(save_dir, dataname+'_Mean_'+'MY'+str(Mars_year)+\
-        '_'+str(Ls_range[0])+'_'+str(Ls_range[1]))
+        '_Ls'+str(Ls_range[0])+'-'+str(Ls_range[1])+'.png')
 
     plt.savefig(savepath,dpi=800)
     plt.close(fig)
@@ -610,7 +610,7 @@ def plotter_dust(data_path, dataname, Mars_year, Ls_range, vmin, vmax,level_num,
         CB.ax.set_ylabel(dataname, rotation=0)
 
     ax.set_title('Mean of '+ dataname + " during " + "MY" + str(Mars_year)+ \
-        " "+ str(Ls_range[0]) + "-" + str(Ls_range[1]))
+        " Ls"+ str(Ls_range[0]) + "-Ls" + str(Ls_range[1]))
 
     plt.xlim((-90,90))
     plt.xlabel('latitude')
@@ -628,7 +628,7 @@ def plotter_dust(data_path, dataname, Mars_year, Ls_range, vmin, vmax,level_num,
         os.makedirs(save_dir)
     
     savepath = os.path.join(save_dir, dataname+'_Mean_'+'MY'+str(Mars_year)+\
-        '_'+str(Ls_range[0])+'_'+str(Ls_range[1]))
+        '_Ls'+str(Ls_range[0])+'-'+str(Ls_range[1])+'.png')
 
     plt.savefig(savepath,dpi=800)
     plt.close(fig)
@@ -663,7 +663,7 @@ def image_sort(image): # input a image name and sort the sequence for movie make
     # return int(image.split('_')[2][2:])*360+int(image.split('_')[-1][2:5])
     
     mars_year = int(image.split('_')[2][2:])
-    begin_day = int(image.split('_')[-1][2:5])
+    begin_day = float(image.split('_')[-1][2:].split('-')[0])
     
     return mars_year*360+begin_day 
     
